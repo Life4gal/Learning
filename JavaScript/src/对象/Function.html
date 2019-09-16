@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Function</title>
+    <script>
+        //不推荐
+        /*
+        var func1 = new Function("a", "b", "alert(a + b);");
+        func1(3, 4);
+        */
+
+        //方法1：
+        /*
+        function func2(a, b) {
+            alert(a + b);
+        }
+        func2(6, 5);
+        */
+
+        //方法2：
+        /*
+        var func3 = function(a, b){
+            alert(a + b);
+        }
+        func3(1, 18);
+         */
+        //注意：如果在已经定义过的函数方法下方再次定义函数，将会对函数方法进行重写覆盖
+        //另外：如果函数需要的参数与实际传的参数数量不同，若参数少传，则未匹配的参数传默认值（如number默认值为0），若参数多传，多的参数忽略
+
+        //接收任意各参数
+        function func3() {  //传入参数使用内置arguments接收
+            var sum = 0;
+            for(var i = 0; i < arguments.length; i++){
+                sum += arguments[i];
+            }
+            alert(sum);
+        }
+        func3(1, 2, 3, 4, 5, 6, 7, 8);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

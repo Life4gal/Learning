@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RegExp</title>
+    <script>
+        //正则表达式
+
+        /*[] 匹配单个字符
+        [a] 匹配a
+        [ab]匹配a或者b
+        [a-zA-Z]匹配所有字母大小写
+        [a-zA-Z0-9_]匹配所有字母大小写及数字和下划线
+        [\d] = [0-9]
+        [\w] = [a-zA-Z0-9_]
+         */
+
+        /*量词符号
+        ?   :   表示出现0次或1次    最多一次
+        *   :   表示出现0次或多次   随便多少个
+        +   :   表示出现1次或多次   最少一次
+        {m,n}  :   出现大于等于m次但是小于等于n次
+            mn之间除了逗号不要有空格
+            m缺省 :   最多n次
+            n缺省 :   最少m次
+         */
+
+        /*开始于结束符号
+        ^   开头
+        $   结尾
+         */
+
+        //正则表达式对象
+
+        //var reg1 = new RegExp("正则表达式");
+        //var reg2 = /正则表达式/;
+
+        var reg1 = new RegExp("^\\w{6,12}$");
+        var reg2 = /^\w{6,12}$/;
+
+        var name = "zambian";
+        //test(参数)    验证参数是否符合正则表达式
+        var flag1 = reg1.test(name);
+        var flag2 = reg2.test(name);
+        document.write(flag1 + "<br>" + flag2 + "<br>");
+    </script>
+</head>
+<body>
+
+</body>
+</html>

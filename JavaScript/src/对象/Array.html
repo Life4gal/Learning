@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array</title>
+    <script>
+        /*
+        var arr1 = new Array(元素列表);
+        var arr2 = new Array(默认长度);
+        var arr3 = [元素列表];
+         */
+
+        var arr1 = new Array(1, 2, 3);
+        var arr2 = new Array(6);    //5个逗号
+        var arr3 = [4, 5, 6];   //推荐
+        var arr4 = [1, "abc", true, NaN];    //储存任意类型
+        //注意：数组长度是可变的
+        var arr5 = [1, 2, 3];
+        arr5[10] = "abc";   //之间的值用逗号代替
+        document.write("arr1=" + arr1 + "<br>arr2=" + arr2 + "<br>arr3=" + arr3 + "<br>arr4=" + arr4 + "<br>arr5=" + arr5);
+
+        /*方法：
+        join(分隔符)   拼接集合元素，不加默认为逗号(,)
+        push()  往集合尾部添加一个或多个元素,返回新长度
+         */
+    </script>
+</head>
+<body>
+
+</body>
+</html>

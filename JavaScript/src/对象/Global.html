@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global</title>
+    <script>
+        //全局对象
+
+        //Global中封装的函数不需要对象直接方法名调用
+
+        //encodeURI()   编码
+
+        //decodeURI()   解码
+
+        //encodeURIComponent()  编码
+
+        //decodeURIComponent()  解码
+
+        var str1 = "测试编码";
+        var encode1 = encodeURI(str1);    //<meta charset="UTF-8">    UTF-8编码
+        document.write(encode1 + "<br>");
+        //符号不会转码
+        document.write(decodeURI(encode1) + "<hr>");
+
+        var str2 = "http://www.baidu.com?&wd=测试编码";
+        var encode2 = encodeURIComponent(str2);
+        document.write(encode2 + "<br>");
+        //符号也会转码
+        document.write(decodeURIComponent(encode2) + "<hr>");
+
+        var str3 = "123456abcdfg789";
+        var num = parseInt(str3);   //从str3第一个字符开始，直到遇到非数字结束，将经过的数字作为数字类型返回
+        document.write(num + "<hr>");
+
+        //isNaN()   NaN参加的所有 == 比较全部为false
+        document.write(NaN == NaN);
+        document.write("<br>" + isNaN(NaN) + "<hr>");
+
+        //eval()    将JavaScript字符串作为代码执行
+        var jscode = "alert(\"evalTest\")";
+        eval(jscode);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
