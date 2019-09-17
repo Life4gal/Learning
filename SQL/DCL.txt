@@ -1,0 +1,18 @@
+1.创建用户
+	create user 用户名@IP地址 identified by '密码';
+		用户只能在指定IP地址登录
+	create user 用户名@'%' identified by '密码';
+		可以在任意ip地址登录
+2.用户授权
+	grant 权限1, 权限2, ......, 权限n on 数据库名称.* to 用户名@IP地址;
+		例：
+			grant create, alter, drop, insert, update, delete, select on student.* to userA@localhost;
+				给用户 userA 创建修改删除student数据库内容等权限,且该用户仅能在localhost登录
+			grand all on student.* to userB@localhost;
+				给用户 userB 操作student数据库的所有权限,且该用户仅能在localhost登录
+3.撤销授权
+	revoke 权限1, 权限2, ......, 权限n on 数据库名称.* to 用户名@IP地址
+4.查看权限
+	show grants for 用户名@IP地址
+5.删除用户
+	drop user 用户名@IP地址

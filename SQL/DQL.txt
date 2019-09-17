@@ -1,0 +1,341 @@
+1.查询语句：
+	1.基础查询
+		select * from 表名;
+	2.条件查询
+		1.排序查询
+			select * from 表名称 order by 子句;
+				order by 排序字段1 排序方式1, 排序字段2 排序方式2, ......;
+					多个排序字段：如果前一个排序字段相同,无法排序,则按之后的方式排序
+					排序方式默认向下升序
+					向下升序：ASC
+					向下降序：DESC
+				例：select * from student order by age ASC;
+					将student表中的所有数据以age升序的方式输出
+		2.聚合函数
+			将一列数据作为整体进行纵向计算
+			1.count 计算个数
+			2.max 计算最大值
+			3.min 计算最小值
+			4.sum 计算和
+			5.avg 计算平均数
+			例：select count(id) from student;
+					计算student表中有多少个非空id
+				select count(ifnull(id,0)) from student;
+					计算student表中有多少个id,遇到空id会当作0算
+				select count(*) from student;
+					计算student表中有多少个不全为空的数据行
+			注意：聚合函数会忽略掉null值的数据
+		3.分组查询
+			将具有相同特征的数据作为整体分组计算
+			select 列名, 聚合函数 from 表名称 group by 分组字段;
+			例：select sex, avg(math), count(id) from student group by sex;
+				将student中按sex分组后,分别输出两组的math值对应的平均数以及对应组所包含的id数量
+			例：select sex, avg(math), count(id) from student where math > 70 group by sex;
+				将student中math值大于70的按sex分组后,分别输出两组的math值对应的平均数以及对应组所包含的id数量
+			例：select sex, avg(math), count(id) from student where math > 70 group by sex having count(id) > 2;
+				将student中math值大于70的按sex分组后,如果对应组所包含id数量大于2,则输出math值对应的平均数以及对应组所包含的id数量
+				别名：
+					select sex, avg(math), count(id) number from student where math > 70 group by sex having number > 2;
+						将count(id)的值取一个别名 number 并将其代指count(id)的值
+			where 与 having 的差别：
+				1.
+					where在分组前限定,如果不满足条件则不参见分组
+					having在分组后限定,如果不满足条件则不输出结果
+				2.
+					where后不可以跟聚合函数判断
+					having后可以跟聚合函数判断
+		4.分页查询
+			select * from student limit 8, 5;
+				从student表中第 9 行开始查询 5 行记录(即一页 5 行记录)
+	3.总结：
+		select
+			字段列表
+			*	：代表所有
+			distinct 字段列表	：去除输出的字段中重复的结果集
+				select distinct age from student;
+					从student表中输出不重复的age结果集
+		from
+			列表名列表
+		where
+			条件列表
+			运算符：
+				>, <, >=, <=, =, <>
+				between...and
+				in(集合)
+					select age from student where age in (12, 15, 18, 21);
+						输出student表中age值为12,15,18,21的数据
+				like
+					模糊查询
+					占位符：
+						_ :一个任意字符
+						% :多个任意字符
+					select * from student where name like '张%';
+						输出student表中所有name值以'张'字符开头的数据
+					select * from student where name like '_浩%';
+						输出student表中所有name值第二个字符为'浩'的数据
+					select * from student where name like '%天%';
+						输出student表中所有name值中包含'天'字符的数据
+				is null
+				and, &&
+				or, ||
+				not, !
+		group by
+			分组字段
+		order by
+			排序
+		limit
+			分页限定
+2.约束
+	对表中数据进行约束,以保证其完整性,有效性
+	分类：
+		1.主键约束：primary key
+			1.注意：
+				1.含义：非空并且唯一
+				2.一张表只能有一个主键字段
+				3.主键是表中记录的唯一标识
+			2.添加主键
+				1.在创建表时添加主键约束
+					create table student(
+						id int primary key,
+						name varchar(20)
+					);
+					此时student表中id的值将不能重复并且不能为空
+				2.改变表数据类型
+					alter table student modify id int primary key;
+						添加id值得主键约束
+			3.删除主键
+				alter table student drop primary key;
+					删除student表中的主键约束
+			4.自动增长
+				如果某一列是数值类型,使用 auto_increment 可以来完成自动增长
+				一般配合主键约束使用
+					create table student(
+						id int primary key auto_increment,
+						name varchar(20)
+					);
+					此时给student表中添加数据可以不给id赋值(以null代替),此条数据的id将会自动赋值为'上一条'数据的id+1(如果是第一条默认为1)
+				删除自动增长
+					alter table student modify id int;
+						将会删除自动增长,主键约束这样删除无效,依旧生效
+				添加自动增长
+					alter table student modify id int auto_increment;
+		2.非空约束：not null
+			1.在创建表时添加约束：
+				例：
+					create table student(
+						id int,
+						name varchar(20) not null
+					);
+					此时student表中name的值将不能为null
+				注意：此时如果要删除约束可以用
+					alter table student modify name varchar(20);
+						去除name值的非空约束
+			2.改变表数据类型
+				alter table student modify name varchar(20) not null;
+					添加name值的非空约束
+		3.唯一约束：unique
+			create table student(
+				id int unique,
+				name varchar(20)
+			);
+			此时student表中id的值将不能重复
+			删除唯一约束与非空不相同
+				alter table student drop index id;
+					去除student表中id的唯一约束
+		4.外键约束：foreign key
+			例如有一张表
+				create table emp(
+					id int primary key auto_increment,
+					name varchar(20),
+					age int,
+					dep_name varchar(20),
+					dep_location varchar(20)
+				);
+			添加数据	(注意：id为 auto_increment ,所以可不写)
+				insert into emp(name, age, dep_name, dep_location) values('张三', 23, '研发部', '广州');
+				insert into emp(name, age, dep_name, dep_location) values('李四', 25, '研发部', '广州');
+				insert into emp(name, age, dep_name, dep_location) values('王五', 21, '研发部', '广州');
+				insert into emp(name, age, dep_name, dep_location) values('赵六', 26, '销售部', '深圳');
+				insert into emp(name, age, dep_name, dep_location) values('田七', 28, '销售部', '深圳');
+			会发现有大量数据冗余
+				dep_name 和 dep_location 冗余
+			此时可进行表拆分
+				分成两张表
+					create table department(
+						id int primary key auto_increment,
+						dep_name varchar(20),
+						dep_location varchar(20)
+					);
+					部门表
+					create table employee(
+						id int primary key auto_increment,
+						name varchar(20),
+						age int,
+						dep_id int
+					);
+					员工表
+				添加两个部门
+					insert into department values(1, '研发部', '广州');
+					insert into department values(2, '销售部', '深圳');
+				添加员工
+					insert into emp(name, age, dep_id) values('张三', 23, 1);
+					insert into emp(name, age, dep_id) values('李四', 25, 1);
+					insert into emp(name, age, dep_id) values('王五', 21, 1);
+					insert into emp(name, age, dep_id) values('赵六', 26, 2);
+					insert into emp(name, age, dep_id) values('田七', 28, 2);
+				此时只需要知道员工部门编号就能查询到部门名称以及位置
+				
+			如果数据变动,部门表中的id=1的部门被删除,但是员工表中dep_id=1的员工将会保留,此时将会造成员工表中dep_id=1的数据不完整
+			
+			添加外键：
+				1.创建表时添加
+					create table 表名称(
+						......
+						constraint 外键名称 foreign key (外键列名称) references 主表名称(主表列名称)
+					);
+					重复之上操作
+						create table department(
+							id int primary key auto_increment,
+							dep_name varchar(20),
+							dep_location varchar(20)
+						);
+						部门表
+						create table employee(
+							id int primary key auto_increment,
+							name varchar(20),
+							age int,
+							dep_id int,
+							constraint emp_dep_fk foreign key (dep_id) references department(id)
+						);
+											↑外键名称自取
+						员工表
+					此时如果要删除部门表中的id=1的部门将会报错
+				2.创建表之后添加
+					alter table employee add constraint emp_dep_fk foreign key (dep_id) references department(id);
+			删除外键：
+				alter table employee drop foreign key emp_dep_fk;
+					删除employee表中的外键约束 emp_dep_fk
+			
+			级联关系：
+				设置级联关系
+					alter table employee add constraint emp_dep_fk foreign key (dep_id) references department(id) on update cascade;
+						此时,如果修改 department 表中的某个id属性, employee 表中的dep_id也会对应更新
+					alter table employee add constraint emp_dep_fk foreign key (dep_id) references department(id) on delete cascade;
+						此时,如果删除 department 表中的某个id属性, employee 表中的dep_id也会对应删除
+					alter table employee add constraint emp_dep_fk foreign key (dep_id) references department(id) on update cascade on delete cascade;
+						同时更新和删除
+3.多表之间关系
+	1.一对一：
+		一张表只和另一张表对应,另一张表也只和这张表对应(如人和身份证)	
+	2.一对多
+		一张表对应多张表(如一个部门多个员工,一个员工只有一个部门)
+		在多的一方建立外键,关联一的一方的主键
+	3.多对多
+		多张表对应多张表(如一个学生可以选多个课程,一个课程也可以被多个学生选择)
+		借助一张中间表,至少包含两列,分别代表两张表的外键,关联对应表的主键
+	
+	多对多实例：
+		create table tab_category(
+			cid int primary key auto_increment,
+			cname varchar(100) not null unique
+		);
+		--旅游线路分类表
+		--cid 旅游线路分类主键
+		--cname 旅游线路分类名称,非空,唯一
+		
+		create table tab_route(
+			rid int primary key auto_increment,
+			rname varchar(100) not null unique,
+			price double,
+			rdate date,
+			cid int,
+			foreign key (cid) references tab_category(cid)	
+		);--简化语法,省略了 constraint 外键名称 两个字段,直接将cid变量指定为外键
+		--线路详细信息表
+		--rid 旅游线路详细信息主键
+		--rname 名称
+		--price 价格
+		--rdate 出发日期
+		--cid 外键,关联 tab_category 表主键
+		
+		create table tab_user(
+			uid int primary key auto_increment,
+			nickname varchar(100) unique not null,
+			password varchar(30) not null,
+			name varchar(100),
+			birthday date,
+			sex char(10) default '男',
+			telephone varchar(11),
+			email varchar(100)
+		);
+		--uid 用户id
+		--nickname 用户昵称
+		--password 密码
+		--name 姓名
+		--birthday 生日日期
+		--sex 性别,默认为'男'
+		--telephone 电话
+		--email 电子邮箱
+		
+		create table tab_favorite(
+			rid int,
+			rdate datetime,
+			uid int,
+			primary key(rid, uid),
+			foreign key (rid) references tab_route(rid),
+			foreign key (uid) references tab_user(uid)
+		);
+		--rid 线路id
+		--rdate 线路日期
+		--uid 用户id
+		--primary key(rid, uid) 两个外键联合成该表的主键,这个联合形式不能重复,即用户不能重复收藏一条旅游线路
+4.范式
+	0.概念
+		1.函数依赖：
+			如果通过A属性值能够确定唯一B属性值,那么就称B函数依赖于A
+				如学生中通过学号能确定唯一学生姓名
+				而学号不能确定唯一分数,(学号+学科)的'属性组'才能够确定唯一分数
+		2.完全函数依赖：
+			如果A是一个'属性组',而唯一B属性的确认需要依赖A'属性组'中所有的属性,那么就称B完全函数依赖于A'属性组'
+		3.部分函数依赖：
+			如果A是一个'属性组',而唯一B属性的确认只需要依赖A'属性组'某一个或几个(非全部)属性,那么就称B部分函数依赖于A'属性组'
+		4.传递函数依赖：
+			如果通过A属性(组)能够确定B属性(组)的值,再通过B属性(组)的值能够确定唯一的C属性的值,那么就称C传递函数依赖于A属性(组)
+		5.在一张表中,如果一个属性(组)被该表其他所有属性完全函数依赖,那么就称该属性(组)为该表的码
+			主属性：码属性组中的所有属性
+			非主属性：非码属性组中的所有属性
+	1.第一范式(1NF)
+		每一列都是不可分割的原子项
+		能创建出的数据库表都符合第一范式
+		
+		可能存在问题：
+			1.严重的数据冗余
+			2.数据添加可能不合法(不完整)
+			3.数据删除可能导致数据缺失
+	2.第二范式(2NF)
+		在第一范式基础上,非码属性必须完全依赖于候选码(在第一范式基础上消除非主属性对主码的'部分函数依赖')
+		
+		可能存在问题：
+			1.数据添加可能不合法(不完整)
+			2.数据删除可能导致数据缺失
+	3.第三范式(3NF)
+		在第二范式基础上,任何非主属性不依赖于其他非主属性(在第二范式基础上消除'传递函数依赖')
+	4.巴斯-科德范式(BCNF),第四范式(4NF),第五范式(5NF)
+5.数据库的备份与还原
+	语法：
+		备份： mysqldump -u用户名 -p密码 要保存的数据库的名称 > 保存路径//文件名.sql
+			例：将test数据库保存在桌面,命名为a
+				mysqldump -u用户名 -p密码 test > C://Users//你的电脑用户名//Desktop//a.sql
+		还原：
+			1.登录数据库
+			2.创建数据库	create database 数据库名称;
+			3.使用数据库	use database 数据库名称;
+			4.执行文件： source 保存路径//文件名.sql;
+				例：将放在桌面的a.sql还原为test数据库
+					source C://Users//你的电脑用户名//Desktop//a.sql 
+6.多表查询分类：
+	1.内连接查询
+	
+	2.外连接查询
+	
+	3.子查询					

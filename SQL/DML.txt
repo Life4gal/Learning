@@ -1,0 +1,30 @@
+1.添加数据
+	insert into 表名称(
+		列名1,
+		列名2,
+		......
+	) values(
+		值1,
+		值2,
+		......
+	);
+	例:
+		insert into student(id, name, age) values(123456, '张三', 16);
+	注：
+		可以不写列名,但是值必须对应,不想写可用null代替,没写的默认用null代替
+		insert into student values(null, '张三', 16);
+2.删除数据
+	delete from 表名称 [where 条件];
+	delete from 表名称 where id=123456;
+		删除id=123456的数据
+	注意：不加条件全部删除
+	
+	truncate table 表名称;
+		删除表然后创建一个同名表(即初始化)
+3.修改数据
+	update 表名称 set 列名1=值1, 列名2=值2, ...... [where 条件];
+	例：
+		update student set age=19 where id=123456;
+			将id=123456的age改为19
+	注意：不加条件全部修改
+	

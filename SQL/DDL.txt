@@ -1,0 +1,90 @@
+1.操作数据库：CRUD
+	1.C（Create）创建
+		create database 数据库名称;
+			创建数据库（如果已存在会报错）
+		create database if not exists 数据库名称;
+			如果该名称的数据库不存在才创建
+		create database 数据库名称 character set gbk;
+			创建一个以GBK编码的数据库
+	2.R（Retrieve）查询
+		show databases;
+			查询所有数据库名称
+		show create database 数据库名称;
+			查询数据库字符集和创建语句
+	3.U（Update）修改
+		alter database 数据库名称 操作;
+		alter database 数据库名称 character set gbk;
+			将数据库编码改为GBK编码
+	4.D（Delete）删除
+		drop database 数据库名称;
+			删除数据库
+		drop database if exists 数据库名称;
+			如果该数据库存在则删除
+	5.使用
+		数据库：
+				select database();
+			查询当前正在使用的数据库
+			use 数据库名称;
+				使用数据库
+2.操作表：
+	1.创建
+		create table 表名称(
+				列名1 数据类型1,
+				列名2 数据类型2,
+				......
+				(类型：	xx int
+							整数类型
+						xx double(5,2)	表示长度为5位数字,保留两位小数点(最大为999.99)
+							小数类型
+						xx date
+							日期类型,只包含年月日 yyyy-MM-dd
+						xx datetime
+							日期类型,包含年月日时分秒 yyyy-MM-dd HH:mm:ss
+						xx timestamp
+							时间戳类型,与datetime一样,如果不赋值则会使用当前时间(而不是null)
+						xx varchar(20)	表示长度最大为20位字符的字符串
+							字符串类型
+				)
+			);
+				创建一个对应形式的数据库(最后一行不要加逗号)
+			创建表例子：
+				create table student(
+					id int,
+					name varchar(32),
+					age int,
+					score double(4,1),
+					birthday date,
+					insert_time timestamp
+				);
+	2.查询
+		show tables;
+			查看数据库中的所有表
+		desc 表名称;
+			查看表中的数据
+		show table 表名称;
+			查看表字符集
+	3.修改
+		create table 表名称 like 被复制的表名称;
+			复制一个表
+		alter table 表名称 操作;
+			修改表
+		alter table 表名称 rename to 新表名;
+			重命名表
+		alter table 表名称 character set gbk;
+			将表字符编码改为GBK编码
+		alter table 表名称 add 列名 数据类型;
+			添加新列
+			
+		alter table 表名称 change 列名 新列名 新数据类型;
+			修改表的某列列名和数据类型
+		alter table 表名称 modify 列名 新数据类型
+			修改表的某列数据类型
+		
+		alter table 表名称 drop 列名;
+			删除表中某列
+	4.删除		
+		drop table 表名称;
+			删除表
+		drop table if exists 表名称;
+			如果存在才删除
+			
