@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        //Window 对象不需要创建，直接使用
+        //window.方法名(); 其中window可以省略
+        /*
+        方法：
+            与提示框有关：
+                1.alert()
+                2.confirm() 弹出有确定和取消两个按钮的提示框，点确定返回true，否则返回false
+                3.prompt("提示文字")    弹出提示文字并且用户可以输入文字，返回用户输入
+            与打开窗口有关：
+                1.open()    默认开启浏览器新页面，可加参数，例如：open("https://www.google.com");  新开启一个谷歌主页面
+                2.close()   默认关闭当前页面，可以用值接收open()返回的值并用 该值.close() 关闭该窗口
+            与定时器有关：
+                1.setTimeout()  指定毫秒后调用函数或计算表达式
+                    参数：
+                        1.JavaScript代码片段或对象
+                        2.毫秒值
+                    返回值：
+                        计时器id值
+                    例如：
+                        setTimeout(timer, 2000);
+                        function timer(){
+                            alert('Time out!');
+                        }
+                2.clearTimeout()    取消setTimeout设置的计时器
+                    例如：
+                        clearTimeout(计时器id);
+                3.setInterval() 每隔指定毫秒调用一次函数或计算表达式
+                4.clearInterval()   取消setInterval设置的计时器
+        属性：
+            1.获取其他BOM对象
+                history
+                location
+                navigator
+                screen
+            2.获取DOM对象
+                document
+         */
+        var picNumber = 1;
+        function changePic() {
+            picNumber++;
+            if(picNumber > 3){
+                picNumber = 1;
+            }
+            var pic = document.getElementById("img");
+            pic.src = "img/" + picNumber + ".png";
+        }
+        setInterval(changePic, 3000);
+    </script>
+</head>
+<body>
+
+    <img src="img/1.png" alt="" id="img">
+
+</body>
+</html>

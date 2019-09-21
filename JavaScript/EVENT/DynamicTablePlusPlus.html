@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table{
+            border: 1px solid;
+            width: 500px;
+            margin-left: 30%;
+        }
+        td,th{
+            text-align: center;
+            border: 1px solid;
+        }
+        div{
+            margin-left: 30%;
+        }
+        .out{
+            background-color: white;
+        }
+        .over{
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <caption>学生信息表</caption>
+
+        <tr class="out">
+            <th>选择</th>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>操作</th>
+        </tr>
+
+        <tr class="out">
+            <td><label>
+                <input type="checkbox" name="cb">
+            </label></td>
+            <td>1</td>
+            <td>学生1</td>
+            <td>男</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">删除</a></td>
+        </tr>
+
+        <tr class="out">
+            <td><label>
+                <input type="checkbox" name="cb">
+            </label></td>
+            <td>2</td>
+            <td>学生2</td>
+            <td>男</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">删除</a></td>
+        </tr>
+
+        <tr class="out">
+            <td><label>
+                <input type="checkbox" name="cb">
+            </label></td>
+            <td>3</td>
+            <td>学生3</td>
+            <td>女</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">删除</a></td>
+        </tr>
+    </table>
+    <div>
+        <input type="button" id="selectAll" value="全选">
+        <input type="button" id="unselectAll" value="全不选">
+        <input type="button" id="selectRev" value="反选">
+        <input type="button" id="delete" value="删除所选">
+    </div>
+
+    <div>
+        <label for="id"></label><input type="text" id="id" placeholder="输入编号">
+        <label for="name"></label><input type="text" id="name" placeholder="输入姓名">
+        <label for="sex"></label><input type="text" id="sex" placeholder="输入性别">
+        <input type="button" id="add" value="添加">
+    </div>
+
+    <script>
+        function deleteTr (obj) {
+            var table = obj.parentNode.parentNode.parentNode;
+            //                  td          tr      table
+            var tr = obj.parentNode.parentNode;
+            //              td          tr
+            table.removeChild(tr);
+        }
+        document.getElementById("add").onclick = function () {
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var sex = document.getElementById("sex").value;
+
+            var table = document.getElementsByTagName("table")[0];
+            table.innerHTML += "<tr class=\"over\">\n" +
+                "            <td><label>\n" +
+                "                <input type=\"checkbox\" name=\"cb\">\n" +
+                "            </label></td>\n" +
+                "            <td>"+id+"</td>\n" +
+                "            <td>"+name+"</td>\n" +
+                "            <td>"+sex+"</td>\n" +
+                "            <td><a href=\"javascript:void(0)\" onclick=\"deleteTr(this)\">删除</a> </td>\n" +
+                "        </tr>"
+        };
+        document.getElementById("selectAll").onclick = function () {
+            var cbs = document.getElementsByName("cb");
+            for (var i = 0; i < cbs.length; i++) {
+                if(!cbs[i].checked){
+                    cbs[i].checked = true;
+                }
+            }
+        };
+        document.getElementById("unselectAll").onclick = function () {
+            var cbs = document.getElementsByName("cb");
+            for (var i = 0; i < cbs.length; i++) {
+                if(cbs[i].checked){
+                    cbs[i].checked = false;
+                }
+            }
+        };
+        document.getElementById("selectRev").onclick = function () {
+            var cbs = document.getElementsByName("cb");
+            for (var i = 0; i < cbs.length; i++) {
+                cbs[i].checked = !cbs[i].checked;
+            }
+        };
+        document.getElementById("delete").onclick = function () {
+            var cbs = document.getElementsByName("cb");
+            for (var i = 0; i < cbs.length; i++) {
+                if(cbs[i].checked){
+                    var table = cbs[i].parentNode.parentNode.parentNode.parentNode;
+                    var tr = cbs[i].parentNode.parentNode.parentNode;
+                    table.removeChild(tr);
+                    //未知原因，删不全
+                }
+            }
+        };
+        var trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            trs[i].onmouseover = function () {
+                this.className = "over";
+            };
+            trs[i].onmouseout = function () {
+                this.className = "out";
+            };
+        };
+        //未知原因，新加入数据后切换背景色无效
+    </script>
+</body>
+</html>

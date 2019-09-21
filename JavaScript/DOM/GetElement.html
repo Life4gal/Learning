@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+    <img id="a" src="../DOM/img/A.png" alt="">
+    <h1 id="b">这是id=b的h1标签内容</h1>
+    <div id="div1">
+        div1
+        <input type="button" id="btn_to_text" value="换成输入框">
+    </div>
+    <div id="div2">
+        div2
+        <input type="button" id="btn_add_text" value="追加输入框">
+    </div>
+
+    <script>
+        //注意，必须在对象加载后才能获取，所以要写在后面
+        var a = document.getElementById("a");
+        alert("换图!");
+        a.src = "img/B.png";
+        var b = document.getElementById("b");
+        alert("换内容!");
+        b.innerHTML = "改变内容！";
+        //b.innerText = "改变内容！";  //与上一条效果一样
+        //注意：innerHTML是通用的，innerText是ie自带的，innerHTML获取的内容如果内部还有HTML标签，会显示出来，但是innerText只会显示所有标签内部的文本
+        document.getElementById("btn_to_text").onclick = function () {
+            var div1 = document.getElementById("div1");
+            div1.innerHTML = "<input type='text'>";
+        };
+        document.getElementById("btn_add_text").onclick = function () {
+            var div2 = document.getElementById("div2");
+            div2.innerHTML += "<input type=text>";
+        };
+    </script>
+</body>
+</html>

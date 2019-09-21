@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /*
+        事件：
+            单击，双击，按下键盘，移动鼠标
+        事件源：
+            按钮，文本输入框
+        监听器：
+            代码
+        注册监听器：
+            将事件源和监听器绑定
+            当事件源发生，执行监听器代码
+         */
+        /*
+        常见事件：
+            1.点击
+                1.onclick() 用户单击事件源
+                2.ondblclick()  用户双击事件源
+            2.焦点
+                1.onblur()  元素失去焦点
+                2.onfocus() 元素获得焦点
+            3.加载
+                1.onload()  页面或图片加载完成
+            4.鼠标
+                1.onmousedown() 鼠标按钮按下
+                2.onmouseup()   鼠标按钮松开
+                3.onmousemove() 鼠标移动
+                4.onmouseover() 鼠标在某元素之上
+                5.onmouseout()  鼠标从某元素移开
+            5.键盘
+                1.onkeydown()   按下键盘
+                2.onkeyup()     松开键盘
+                3.onkeypress()  按下并松开键盘
+            6.选择和改变
+                1.onchange()    域的内容被改变
+                2.onselect()    文本被选中
+            7.表单事件
+                1.onsubmit()    点击确认按钮
+                2.onreset()     点击重置按钮
+         */
+    onload = function () {  //在加载页面完成后才有失去焦点触发事件，这样不会出错
+        // document.getElementById("username").onblur = function () {
+        //     alert("失去焦点");
+        // };
+        // document.getElementById("username").onmouseover = function () {
+        //     alert("获得焦点");
+        // };
+        document.getElementById("username").onmousedown = function (ev) {
+            //  0 = 左键  1 = 滚轮  2 = 右键  3/4 = 侧键
+            if(ev.button === 0){
+                alert("点击了鼠标左键");
+            }
+            else if(ev.button === 1){
+                alert("点击了鼠标滚轮");
+            }
+            else if(ev.button === 2){
+                alert("点击了鼠标右键");
+            }
+            else{
+                alert("点击了鼠标侧键");
+            }
+        };
+        document.getElementById("option").onchange = function () {
+          alert("选项改变");
+        };
+    };
+    function checkForm(){
+        alert("禁止提交！");
+        return false;
+    }
+    </script>
+</head>
+<body>
+<form action="#" onsubmit="return checkForm()" id="form">
+    <div>
+        <p>输入用户名</p>
+        <label for="username"></label><input type="text" id="username">
+    </div>
+    <label for="option"></label><select id="option">
+        <option>--请选择--</option>
+        <option>option1</option>
+        <option>option2</option>
+        <option>option3</option>
+    </select>
+    <label>
+        <select id="boolean">
+            <option>--请选择--</option>
+            <option>true</option>
+            <option>false</option>
+        </select>
+    </label>
+    <input type="submit" value="提交">
+</form>
+</body>
+</html>

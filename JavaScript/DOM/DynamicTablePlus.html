@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            text-align: center;
+            margin: 50px;
+        }
+        table{
+            border: 1px solid;
+            margin: auto;
+            width: 500px;
+        }
+        td{
+            text-align: center;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="id"></label><input type="text" id="id" placeholder="input id">
+        <label for="name"></label><input type="text" id="name" placeholder="input name">
+        <label for="sex"></label><input type="text" id="sex" placeholder="input sex">
+        <input type="button" value="ADD" id="btn_add">
+    </div>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>NAME</td>
+            <td>SEX</td>
+            <td>OPERATE</td>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Person1</td>
+            <td>male</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">DELETE</a> </td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Person2</td>
+            <td>female</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">DELETE</a> </td>
+        </tr>
+    </table>
+    <script>
+        function deleteTr (obj) {
+            var table = obj.parentNode.parentNode.parentNode;
+            //                  td          tr      table
+            var tr = obj.parentNode.parentNode;
+            //              td          tr
+            table.removeChild(tr);
+        }
+        document.getElementById("btn_add").onclick = function () {
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var sex = document.getElementById("sex").value;
+
+            var table = document.getElementsByTagName("table")[0];
+            table.innerHTML += "<tr>\n" +
+                "            <td>"+id+"</td>\n" +
+                "            <td>"+name+"</td>\n" +
+                "            <td>"+sex+"</td>\n" +
+                "            <td><a href=\"javascript:void(0)\" onclick=\"deleteTr(this)\">DELETE</a> </td>\n" +
+                "        </tr>"
+        }
+    </script>
+</body>
+</html>

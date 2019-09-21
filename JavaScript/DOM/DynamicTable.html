@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Table</title>
+    <style>
+        div{
+            text-align: center;
+            margin: 50px;
+        }
+        table{
+            border: 1px solid;
+            margin: auto;
+            width: 500px;
+        }
+        td{
+            text-align: center;
+            border: 1px solid;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="id"></label><input type="text" id="id" placeholder="input id">
+        <label for="name"></label><input type="text" id="name" placeholder="input name">
+        <label for="sex"></label><input type="text" id="sex" placeholder="input sex">
+        <input type="button" value="ADD" id="btn_add">
+    </div>
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>NAME</td>
+            <td>SEX</td>
+            <td>OPERATE</td>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Person1</td>
+            <td>male</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">DELETE</a> </td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Person2</td>
+            <td>female</td>
+            <td><a href="javascript:void(0)" onclick="deleteTr(this)">DELETE</a> </td>
+        </tr>
+    </table>
+    <script>
+        function deleteTr (obj) {
+            var table = obj.parentNode.parentNode.parentNode;
+            //                  td          tr      table
+            var tr = obj.parentNode.parentNode;
+            //              td          tr
+            table.removeChild(tr);
+        }
+        document.getElementById("btn_add").onclick = function () {
+            var id = document.getElementById("id").value;
+            var name = document.getElementById("name").value;
+            var sex = document.getElementById("sex").value;
+
+            var td_id = document.createElement("td");
+            var text_id = document.createTextNode(id);
+            td_id.appendChild(text_id);
+            var td_name = document.createElement("td");
+            var text_name = document.createTextNode(name);
+            td_name.appendChild(text_name);
+            var td_sex = document.createElement("td");
+            var text_sex = document.createTextNode(sex);
+            td_sex.appendChild(text_sex);
+
+            var td_a = document.createElement("td");    //delete
+            var ele_a = document.createElement("a");
+            ele_a.setAttribute("href", "javascript:void(0)");
+            ele_a.setAttribute("onclick", "deleteTr(this)");
+            var text_a = document.createTextNode("DELETE");
+            ele_a.appendChild(text_a);
+            td_a.appendChild(ele_a);
+
+            var tr = document.createElement("tr");
+            tr.appendChild(td_id);
+            tr.appendChild(td_name);
+            tr.appendChild(td_sex);
+            tr.appendChild(td_a);
+
+            var table = document.getElementsByTagName("table")[0];
+            table.appendChild(tr);
+        }
+    </script>
+</body>
+</html>

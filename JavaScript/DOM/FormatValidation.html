@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            padding-top: 25px;
+        }
+        .rg_layout{
+            width: 900px;
+            height: 500px;
+            border: 8px solid red;
+            background-color: white;
+            margin: auto;
+        }
+        .rg_left{
+            float: left;
+            margin: 15px;
+        }
+        .rg_left > p:first-child{
+            color: #FFD026;
+            font-size: 20px;
+        }
+        .rg_left > p:last-child{
+            color: #A6A6A6;
+        }
+
+        .rg_center{
+            float: left;
+        }
+        .rg_right{
+            float: right;
+            margin: 15px;
+        }
+        .rg_right > p:first-child{
+            font-size: 15px;
+        }
+        .rg_right p a{
+            color: pink;
+        }
+
+        .td_left{
+            width: 100px;
+            text-align: right;
+            height: 45px;
+        }
+        .td_right{
+            padding-left: 50px;
+        }
+
+        #username,#password,#email,#name,#tel,#birthday,#checkCode{
+            width: 251px;
+            height: 32px;
+            border: 1px solid #A6A6A6;
+            border-radius: 5px;
+            padding-left: 10px;
+        }
+        #checkCode{
+            width: 110px;
+        }
+
+        #btn_sub{
+            width: 150px;
+            height: 40px;
+            background-color: #FFD026;
+            border: 1px solid #FFD026;
+        }
+        .error{
+            color: red;
+        }
+        .right{
+            color: green;
+        }
+    </style>
+    <script>
+        onload = function () {
+            document.getElementById("form").onsubmit = function () {
+                return checkUsername() && checkPassword();
+            };
+            document.getElementById("username").onblur = checkUsername;
+            document.getElementById("password").onblur = checkPassword;
+            function checkUsername() {
+                var username = document.getElementById("username").value;
+                var reg_username = /^\w{6,12}$/;
+                var flag = reg_username.test(username);
+                var span = document.getElementById("s_username");
+                if(flag){
+                    span.innerHTML = "<span class='right'>格式正确</span>";
+                    return true;
+                }
+                span.innerHTML = "<img width='50' height='25' src='img/error.png' alt=''>" + "<span>格式错误</span>";
+                return false;
+            }
+            function checkPassword() {
+                var username = document.getElementById("password").value;
+                var reg_username = /^\w{6,12}$/;
+                var flag = reg_username.test(username);
+                var span = document.getElementById("s_password");
+                if(flag){
+                    span.innerHTML = "<span class='right'>格式正确</span>";
+                    return true;
+                }
+                span.innerHTML = "<img width='50' height='25' src='img/error.png' alt=''>" + "<span>格式错误</span>";
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="rg_layout">
+        <div class="rg_left">
+            <p>新用户注册</p>
+            <img src="img/GitHub.jpg" width="100" height="100" alt="">
+        </div>
+
+        <div class="rg_center">
+            <div class="rg_form">
+                <form action="#" method="get" id="form">
+                    <table>
+                        <tr>
+                            <td class="td_left"><label for="username">用户名</label></td>
+                            <td class="td_right"><label>
+                                <input type="text" name="username" id="username" placeholder="请输入用户名">
+                            </label>
+                            <span id="s_username" class="error"></span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="password">密码</label></td>
+                            <td class="td_right"><label>
+                                <input type="text" name="password" id="password" placeholder="请输入密码">
+                            </label>
+                            <span id="s_password" class="error"></span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="name">姓名</label></td>
+                            <td class="td_right"><input type="text" name="name" id="name" placeholder="请输入姓名"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="tel">手机号</label></td>
+                            <td class="td_right"><input type="text" name="tel" id="tel"></td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label>性别</label></td>
+                            <td class="td_right">
+                                <label>
+                                    <input type="radio" name="sex" checked>男
+                                </label>
+                                <label>
+                                    <input type="radio" name="sex">女
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="email">邮箱</label></td>
+                            <td class="td_right">
+                                <input type="text" name="email" id="email" placeholder="">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="birthday">出生日期</label></td>
+                            <td class="td_right">
+                                <input type="date" name="birthday" id="birthday" placeholder="">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="td_left"><label for="checkCode">验证码</label></td>
+                            <td class="td_right"><input type="text" name="checkCode" id="checkCode">
+                            <img src="img/checkCode.png" width="300px" height="50px" align="center">    <!-- 这个align属性不加会对齐出现偏差-->
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="2" align="center"><input type="submit" id="btn_sub" value="注册"></td>   <!-- 这个align属性不加会对齐出现偏差-->
+                        </tr>
+
+                    </table>
+                </form>
+            </div>
+        </div>
+
+        <div class="td_right">
+            <p>已有帐号?<a href="#">立即登录</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

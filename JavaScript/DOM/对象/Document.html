@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /*
+        Document文档对象:
+            1.方法：
+                1.获取Element对象
+                    1.getElementById()  根据id获取元素对象，id一般唯一
+                    2.getElementByTagName() 根据元素名称获取元素对象，返回值为数组
+                    3.getElementByClassName()   根据Class属性值获取元素对象，返回值为数组
+                    4.getElementByName()    根据name属性获取元素对象，返回值为数组
+                2.获取其他DOM对象
+                    1.createAttribute(name)
+                    2.createComment()
+                    3.createElement()
+                    createTextNode()
+         */
+        var divs = document.getElementsByTagName("div");
+        alert(divs.length);
+        var classes = document.getElementsByClassName("cls");
+        alert(classes.length);
+        var username = document.getElementsByName("username");
+        alert(username.length);
+
+        var table = document.createElement("table");
+        alert(table);
+
+    </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div{
+            border: 1px solid red;
+        }
+        #div1{
+            background-color: blue;
+            width: 300px;
+            height: 400px;
+        }
+        #div2{
+            background-color: pink;
+            width: 100px;
+            height: 200px;
+        }
+        #div3{
+            background-color: coral;
+            width: 150px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div1">
+        div1
+        <div id="div2">
+            div2
+        </div>
+    </div>
+    <a href="javascript:void(0)" id="del">删除子节点</a>
+    <a href="javascript:void(0)" id="add">添加子节点</a>
+    <!--  使用javascript:void(0)来避免跳转，防止页面刷新导致删除/添加无效  -->
+    <script>
+        var ele_del = document.getElementById("del");
+        ele_del.onclick = function () {
+            var div1 = document.getElementById("div1");
+            var div2 = document.getElementById("div2");
+            div1.removeChild(div2);
+        };
+        var ele_add = document.getElementById("add");
+        ele_add.onclick = function () {
+            var div1 = document.getElementById("div1");
+            var div3 = document.createElement("div");
+            div3.setAttribute("id", "div3");
+
+            div1.appendChild(div3);
+        };
+        var div2 = document.getElementById("div1");
+        var div1 = div2.parentNode;
+        alert(div1);
+    </script>
+</body>
+</html>

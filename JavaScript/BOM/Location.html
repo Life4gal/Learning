@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        p{
+            text-align: center;
+        }
+        span{
+            color: red;
+        }
+    </style>
+    <script>
+        /*
+        方法：
+            1.reload()  重新加载当前文档，即刷新页面
+        属性：
+            href    网页的URL地址
+         */
+    </script>
+</head>
+<body>
+
+    <input type="button" id="btn1" value="刷新">
+    <input type="button" id="btn2" value="谷歌">
+    <p>
+        <span id="time">5</span>秒后自动跳转至谷歌
+    </p>
+
+    <script>
+        var btn1 = document.getElementById("btn1");
+        btn1.onclick = function () {
+            location.reload();
+        };
+        var btn2 = document.getElementById("btn2");
+        btn2.onclick = function () {
+            location.href = "https://www.google.com";
+        };
+        var second = 5;
+        var timer = document.getElementById("time");
+        function showTime() {
+            second--;
+            if(second <= 0){
+                location.href = "https://www.google.com";
+            }
+            timer.innerHTML = second.toString();
+        }
+        setInterval(showTime, 1000);
+    </script>
+</body>
+</html>
