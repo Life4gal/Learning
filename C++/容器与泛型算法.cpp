@@ -6,7 +6,6 @@
 #include <deque>
 #include <queue>
 
-
 using namespace std;
 
 /*
@@ -47,17 +46,21 @@ template <typename inputIterator, typename outputIterator, typename elemType, ty
 outputIterator
 myFilter(inputIterator first, inputIterator last, outputIterator at, const elemType& val, Comparable pred){
     while((first = find_if(first, last, bind2nd(pred, val))) != last){  // bind2nd: 将 val 的值绑定至 pred 所指的二元运算方法的第二个值
-                                        // not1: 一元函数对象真伪值取反, not2: 二元函数对象真伪值取反, 例如上句中的
-                                        // bind2nd(pred, val) 改为 not1(bind2nd(pred, val))
-                                        // 当 pred 所指的二元运算方法为 less<type>时,实际效果会变成 greater_equal<type>
-                                        // 当 pred 所指的二元运算方法为 equal_to<type>时,实际效果会变成 not_equal_to<type>
+                                // not1: 一元函数对象真伪值取反, not2: 二元函数对象真伪值取反, 例如上句中的
+                                // bind2nd(pred, val) 改为 not1(bind2nd(pred, val))
+                                // 当 pred 所指的二元运算方法为 not1(less<type>)时,实际效果会变成 greater_equal<type>
+                                // 当 pred 所指的二元运算方法为 not1(equal_to<type>)时,实际效果会变成 not_equal_to<type>
         cout << "found value " << *first<< endl;
         *at++ = *first++;
     }
     return at;
+    // 没有对传入容器大小判断,如果传入容器过小将导致出错甚至程序崩溃
+    // 在调用函数时将原来的单纯传入容器改为
+    // back_inserter(原来的容器),将会在原来的容器末尾进行插入
+    // inserter(原来的容器, 开始的位置(如 vec.end())),将会从所指定的位置开始插入
+    // font_inserter(原来的容器),将会从容器开始位置进行插入(只适用于 list, deque)
+    // 之所以没有如此做是因为上述方法不适用于 array 类型,因为数组不支持插入操作(使用上述函数需要 #include <iterator>)
 }
-
-
 
 int main(){
 
