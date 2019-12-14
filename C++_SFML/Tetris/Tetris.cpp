@@ -108,14 +108,14 @@ int main()
 
 	Sprite tiles(texture_tiles), background(texture_background), frame(texture_frame);
 
-	auto mid_field_lines = int(10 / 2) - 1;	/* 令图形出现在场地上一行的中间，-1是补偿旋转中心的偏差 */
+	auto mid_field_rows = int(field_rows / 2) - 1;	/* 令图形出现在场地上一行的中间，-1是补偿旋转中心的偏差 */
 	auto dx = 0; /* 图形左右移动了多少格 */
 	auto is_rotate = false; /* 图形是否旋转 */
 	float timer = 0; /* 计时器，用来确定是否需要下降 */
 	auto delay = 0.3; /* 图形下降的周期 */
 	auto score = 0; /* 得分 */
 
-	/* 随即构建第一个图形 */
+	/* 随机构建第一个图形 */
     auto color_num = 1 + rand() % 7;
     /* 方块颜色，从tiles.png中截取，因为第一个和最后一个颜色相同，所以从1开始 */
 	auto n = rand() % 7;
