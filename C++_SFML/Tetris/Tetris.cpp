@@ -116,7 +116,7 @@ int main()
 	auto score = 0; /* 得分 */
 
 	/* 随机种子 */
-	srand(time(nullptr));
+	srand(static_cast<unsigned int>(time(nullptr)));
 	/* 随机构建第一个图形 */
     auto color_num = 1 + rand() % 7;
     /* 方块颜色，从tiles.png中截取，因为第一个和最后一个颜色相同，所以从1开始 */
