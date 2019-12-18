@@ -115,6 +115,8 @@ int main()
 	auto delay = 0.3; /* 图形下降的周期 */
 	auto score = 0; /* 得分 */
 
+	/* 随机种子 */
+	srand(time(nullptr));
 	/* 随机构建第一个图形 */
     auto color_num = 1 + rand() % 7;
     /* 方块颜色，从tiles.png中截取，因为第一个和最后一个颜色相同，所以从1开始 */
@@ -122,7 +124,7 @@ int main()
 	/* 图形类型 */
 	for (auto i = 0; i < 4; i++)
 	{
-		a[i].x = figures[n][i] % 2 + mid_field_lines;
+		a[i].x = figures[n][i] % 2 + mid_field_rows;
 		a[i].y = figures[n][i] / 2;
 	}
 
@@ -250,7 +252,7 @@ int main()
 				n = rand() % 7;
 				for (auto i = 0; i < 4; i++)
 				{
-					a[i].x = figures[n][i] % 2 + mid_field_lines;
+					a[i].x = figures[n][i] % 2 + mid_field_rows;
 					a[i].y = figures[n][i] / 2;
 				}
 			}
