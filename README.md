@@ -58,3 +58,9 @@
 
 [2019年11月12日，记住这一天吧，记住你在这一天做出了选择，记住你失去和获得的东西。](https://github.com/Life4gal/Learning/blob/master/Diary/我的路.md)
 
+
+
+### 重要的事情说三遍：C++真香 C++真香 
+
+
+
